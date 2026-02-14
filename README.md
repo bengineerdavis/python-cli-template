@@ -2,6 +2,8 @@
 
 A [Copier](https://copier.readthedocs.io/) template for creating Python CLI projects with your choice of [Click](https://click.palletsprojects.com/) or [Typer](https://typer.tiangolo.com/) framework.
 
+📚 **[Read the detailed usage guide](USAGE.md)** for more information.
+
 ## Features
 
 - Choice between Click or Typer CLI framework
