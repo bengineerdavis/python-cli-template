@@ -1,0 +1,29 @@
+"""
+Tests for business logic
+"""
+
+from {{ package_name }}.logic import greet, process_data
+
+
+def test_greet_default():
+    """Test greet with default parameters"""
+    result = greet("Alice")
+    assert result == "Hello, Alice!"
+
+
+def test_greet_uppercase():
+    """Test greet with uppercase flag"""
+    result = greet("Bob", upper=True)
+    assert result == "HELLO, BOB!"
+
+
+def test_process_data_default():
+    """Test process_data with default parameters"""
+    result = process_data("test")
+    assert result == "Processed: test"
+
+
+def test_process_data_reverse():
+    """Test process_data with reverse flag"""
+    result = process_data("hello", reverse=True)
+    assert result == "olleh"

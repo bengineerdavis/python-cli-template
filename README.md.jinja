@@ -1,0 +1,63 @@
+# {{ project_name }}
+
+{{ project_description }}
+
+## Installation
+
+```bash
+pip install -e .
+```
+
+For development:
+
+```bash
+pip install -e ".[dev]"
+```
+
+## Usage
+
+```bash
+{{ project_slug }} --help
+```
+
+## Development
+
+### Running Tests
+
+```bash
+pytest
+```
+
+### Code Formatting
+
+```bash
+black src/ tests/
+```
+
+### Linting
+
+```bash
+ruff check src/ tests/
+```
+
+## Project Structure
+
+```
+{{ project_slug }}/
+├── pyproject.toml         # Project metadata and dependencies
+├── README.md              # This file
+├── .gitignore             # Files to exclude from Git
+├── src/                   
+│   └── {{ package_name }}/   # The actual package
+│       ├── __init__.py    
+│       ├── __main__.py    # Entry point for `python -m {{ package_name }}`
+│       ├── cli.py         # CLI implementation using {{ cli_framework }}
+│       └── logic.py       # Business logic
+└── tests/                 
+    ├── __init__.py
+    └── test_cli.py        # CLI tests
+```
+
+## License
+
+MIT License

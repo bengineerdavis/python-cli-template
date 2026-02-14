@@ -1,0 +1,110 @@
+"""
+Tests for the CLI
+"""
+
+import pytest
+{%- if cli_framework == "click" %}
+from click.testing import CliRunner
+
+from {{ package_name }}.cli import main
+
+
+@pytest.fixture
+def runner():
+    """Create a CLI runner"""
+    return CliRunner()
+
+
+def test_hello_default(runner):
+    """Test hello command with default name"""
+    result = runner.invoke(main, ["hello"])
+    assert result.exit_code == 0
+    assert "Hello, World!" in result.output
+
+
+def test_hello_with_name(runner):
+    """Test hello command with custom name"""
+    result = runner.invoke(main, ["hello", "--name", "Alice"])
+    assert result.exit_code == 0
+    assert "Hello, Alice!" in result.output
+
+
+def test_hello_uppercase(runner):
+    """Test hello command with uppercase flag"""
+    result = runner.invoke(main, ["hello", "--name", "Bob", "--upper"])
+    assert result.exit_code == 0
+    assert "HELLO, BOB!" in result.output
+
+
+def test_process_default(runner):
+    """Test process command with default behavior"""
+    result = runner.invoke(main, ["process", "test"])
+    assert result.exit_code == 0
+    assert "Processed: test" in result.output
+
+
+def test_process_reverse(runner):
+    """Test process command with reverse flag"""
+    result = runner.invoke(main, ["process", "hello", "--reverse"])
+    assert result.exit_code == 0
+    assert "olleh" in result.output
+
+
+def test_help(runner):
+    """Test that help text is displayed"""
+    result = runner.invoke(main, ["--help"])
+    assert result.exit_code == 0
+    assert "{{ project_description }}" in result.output
+{%- elif cli_framework == "typer" %}
+from typer.testing import CliRunner
+
+from {{ package_name }}.cli import app
+
+
+@pytest.fixture
+def runner():
+    """Create a CLI runner"""
+    return CliRunner()
+
+
+def test_hello_default(runner):
+    """Test hello command with default name"""
+    result = runner.invoke(app, ["hello"])
+    assert result.exit_code == 0
+    assert "Hello, World!" in result.stdout
+
+
+def test_hello_with_name(runner):
+    """Test hello command with custom name"""
+    result = runner.invoke(app, ["hello", "--name", "Alice"])
+    assert result.exit_code == 0
+    assert "Hello, Alice!" in result.stdout
+
+
+def test_hello_uppercase(runner):
+    """Test hello command with uppercase flag"""
+    result = runner.invoke(app, ["hello", "--name", "Bob", "--upper"])
+    assert result.exit_code == 0
+    assert "HELLO, BOB!" in result.stdout
+
+
+def test_process_default(runner):
+    """Test process command with default behavior"""
+    result = runner.invoke(app, ["process", "test"])
+    assert result.exit_code == 0
+    assert "Processed: test" in result.stdout
+
+
+def test_process_reverse(runner):
+    """Test process command with reverse flag"""
+    result = runner.invoke(app, ["process", "hello", "--reverse"])
+    assert result.exit_code == 0
+    assert "olleh" in result.stdout
+
+
+def test_help(runner):
+    """Test that help text is displayed"""
+    result = runner.invoke(app, ["--help"])
+    assert result.exit_code == 0
+    assert "{{ project_description }}" in result.stdout
+{%- endif %}
