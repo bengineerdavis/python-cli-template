@@ -1,0 +1,73 @@
+"""
+CLI implementation using {{ cli_framework }}
+"""
+
+{%- if cli_framework == "click" %}
+import click
+
+from {{ package_name }}.logic import greet, process_data
+
+
+@click.group()
+@click.version_option()
+def main():
+    """{{ project_description }}"""
+    pass
+
+
+@main.command()
+@click.option("--name", "-n", default="World", help="Name to greet")
+@click.option("--upper", "-u", is_flag=True, help="Convert to uppercase")
+def hello(name: str, upper: bool):
+    """Say hello to someone"""
+    result = greet(name, upper)
+    click.echo(result)
+
+
+@main.command()
+@click.argument("data")
+@click.option("--reverse", "-r", is_flag=True, help="Reverse the output")
+def process(data: str, reverse: bool):
+    """Process some data"""
+    result = process_data(data, reverse)
+    click.echo(result)
+
+
+if __name__ == "__main__":
+    main()
+{%- elif cli_framework == "typer" %}
+import typer
+
+from {{ package_name }}.logic import greet, process_data
+
+app = typer.Typer(help="{{ project_description }}")
+
+
+@app.command()
+def hello(
+    name: str = typer.Option("World", "--name", "-n", help="Name to greet"),
+    upper: bool = typer.Option(False, "--upper", "-u", help="Convert to uppercase"),
+):
+    """Say hello to someone"""
+    result = greet(name, upper)
+    typer.echo(result)
+
+
+@app.command()
+def process(
+    data: str = typer.Argument(..., help="Data to process"),
+    reverse: bool = typer.Option(False, "--reverse", "-r", help="Reverse the output"),
+):
+    """Process some data"""
+    result = process_data(data, reverse)
+    typer.echo(result)
+
+
+def main():
+    """Main entry point for the CLI"""
+    app()
+
+
+if __name__ == "__main__":
+    main()
+{%- endif %}

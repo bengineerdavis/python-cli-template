@@ -1,0 +1,36 @@
+"""
+Business logic for {{ project_name }}
+"""
+
+
+def greet(name: str, upper: bool = False) -> str:
+    """
+    Generate a greeting message.
+
+    Args:
+        name: The name to greet
+        upper: Whether to convert to uppercase
+
+    Returns:
+        The greeting message
+    """
+    message = f"Hello, {name}!"
+    if upper:
+        return message.upper()
+    return message
+
+
+def process_data(data: str, reverse: bool = False) -> str:
+    """
+    Process the given data.
+
+    Args:
+        data: The data to process
+        reverse: Whether to reverse the output
+
+    Returns:
+        The processed data
+    """
+    if reverse:
+        return data[::-1]
+    return f"Processed: {data}"
